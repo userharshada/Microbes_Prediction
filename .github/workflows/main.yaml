@@ -20,7 +20,9 @@ jobs:
 
       - name: Install Render CLI
         run: |
-          curl -L https://render.com/install.sh | bash
+          curl -L "https://cli.render.com/cli/linux/render-latest" -o render
+          chmod +x render
+          sudo mv render /usr/local/bin/
 
       - name: Login to Render
         run: render login --api-key ${{ secrets.RENDER_API_KEY }}
