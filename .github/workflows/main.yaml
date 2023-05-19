@@ -18,12 +18,11 @@ jobs:
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
-      - name: Set custom DNS resolver
-        run: echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
-      
+
+
       - name: Install Render CLI
         run: |
-          curl -L "https://cli.render.com/cli/linux/render-latest" -o render
+          wget -O render https://github.com/render/cli/releases/latest/download/render-linux
           chmod +x render
           sudo mv render /usr/local/bin/
 
@@ -33,6 +32,6 @@ jobs:
       - name: Deploy to Render
         run: render deploy --service ${{ secrets.RENDER_SERVICE_ID }} --file Dockerfile --branch main
 
-          
-             
-### ⬆ IMPORTANT PART ⬆ ###
+
+
+### ⬇ IMPORTANT PART ⬇ ###
