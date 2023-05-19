@@ -18,6 +18,9 @@ jobs:
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
+      - name: Set custom DNS resolver
+        run: echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+      
       - name: Install Render CLI
         run: |
           curl -L "https://cli.render.com/cli/linux/render-latest" -o render
