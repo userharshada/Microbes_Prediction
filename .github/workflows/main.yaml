@@ -18,24 +18,15 @@ jobs:
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
+      - name: Install Render CLI
+        run: |
+          curl -L https://render.com/install.sh | bash
+
+      - name: Login to Render
+        run: render login --api-key ${{ secrets.RENDER_API_KEY }}
+
       - name: Deploy to Render
-        uses: renderapp/cli-action@0.4.0
-        with:
-          # Render API key associated with your Render account.
-          # The API key can be obtained from your Render account settings.
-          render_token: ${{ secrets.RENDER_API_KEY }}
-
-          # Render service ID or name.
-          render_service_id: ${{ secrets.RENDER_SERVICE_ID }}
-
-          # (Optional, default: "Dockerfile")
-          # Dockerfile name.
-          dockerfile: Dockerfile
-
-          # (Optional)
-          # Additional options for the 'render deploy' command.
-          # For example, you can specify '--branch' or other options here.
-          deploy_options: ""
+        run: render deploy --service ${{ secrets.RENDER_SERVICE_ID }} --file Dockerfile --branch main
 
           
              
