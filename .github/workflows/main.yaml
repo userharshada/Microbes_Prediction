@@ -21,11 +21,14 @@ jobs:
       - name: Install Render CLI
         run: |
           wget -qO- https://render.com/install.sh | sh
+          export PATH="$HOME/.render:$PATH"
+
 
 
       - name: Login to Render
         run: |
-          render login --api-key ${{ secrets.RENDER_API_KEY }}
+          $HOME/.render/render login --api-key ${{ secrets.RENDER_API_KEY }}
+
 
       - name: Build and Deploy to Render
         run: |
