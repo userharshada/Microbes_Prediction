@@ -18,26 +18,18 @@ jobs:
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
-      - name: Build, Push and Release a Docker container to Render
-        uses: render-actions/deploy@v1
-        with:
-          # Render API key associated with your account.
-          render_api_key: ${{ secrets.RENDER_API_KEY }}
+      - name: Install Render CLI
+        run: |
+          curl -sL https://render.com/install.sh | sh
 
-          # Name of the Render service to which the build is to be sent.
-          render_service_name: ${{ secrets.RENDER_SERVICE_NAME }}
+      - name: Login to Render
+        run: |
+          render login --api-key ${{ secrets.RENDER_API_KEY }}
 
-          # (Optional, default: "./")
-          # Dockerfile directory.
-          dockerfile_directory: ./
-
-          # (Optional, default: "Dockerfile")
-          # Dockerfile name.
-          dockerfile_name: Dockerfile
-
-          # (Optional, default: "")
-          # Additional options of docker build command.
-          docker_options: "--no-cache"
+      - name: Build and Deploy to Render
+        run: |
+          render build --file Dockerfile
+          render deploy --service ${{ secrets.RENDER_SERVICE_NAME }}
 
 
 
