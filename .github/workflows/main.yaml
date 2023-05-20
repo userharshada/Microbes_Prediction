@@ -6,31 +6,39 @@ on:
   push:
     branches: [main]
 
-# Your workflow jobs.
+# Your workflows jobs.
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Check out your repository.
+      # Check-out your repository.
       - name: Checkout
         uses: actions/checkout@v2
 
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
-      # Install Render CLI.
-      - name: Install Render CLI
-        run: |
-          curl -L https://render.com/install.sh | bash
+      - name: Build, Push and Release a Docker container to Render
+        uses: render-actions/deploy@v1
+        with:
+          # Render API key associated with your account.
+          render_api_key: ${{ secrets.RENDER_API_KEY }}
 
-      # Login to Render.
-      - name: Login to Render
-        run: render login --api-key ${{ secrets.RENDER_API_KEY }}
+          # Name of the Render service to which the build is to be sent.
+          render_service_name: ${{ secrets.RENDER_SERVICE_NAME }}
 
-      # Deploy to Render.
-      - name: Deploy to Render
-        run: render deploy --service ${{ secrets.RENDER_SERVICE_ID }} --file Dockerfile --branch main
+          # (Optional, default: "./")
+          # Dockerfile directory.
+          dockerfile_directory: ./
+
+          # (Optional, default: "Dockerfile")
+          # Dockerfile name.
+          dockerfile_name: Dockerfile
+
+          # (Optional, default: "")
+          # Additional options of docker build command.
+          docker_options: "--no-cache"
 
 
 
-### ⬇ IMPORTANT PART ⬇ ###
+### ⬆ IMPORTANT PART ⬆ ###
