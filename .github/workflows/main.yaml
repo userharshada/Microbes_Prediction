@@ -22,6 +22,7 @@ jobs:
         run: |
           curl -sL -o render https://render.com/static/cli/latest/linux/render
           chmod +x render
+          mkdir -p $HOME/.local/bin
           mv render $HOME/.local/bin/render
           export PATH="$HOME/.local/bin:$PATH"
 
