@@ -20,9 +20,11 @@ jobs:
 
       - name: Install Render CLI
         run: |
-          wget -qO- https://render.com/install.sh | sh
+          curl -sL https://render.com/install.sh | bash
           export PATH="$HOME/.render:$PATH"
 
+      - name: Set up Render environment
+        run: render setup
 
 
       - name: Login to Render
