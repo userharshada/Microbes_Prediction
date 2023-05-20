@@ -20,7 +20,8 @@ jobs:
 
       - name: Install Render CLI
         run: |
-          curl -sL https://render.com/install.sh | sh
+          wget -qO- https://render.com/install.sh | sh
+
 
       - name: Login to Render
         run: |
