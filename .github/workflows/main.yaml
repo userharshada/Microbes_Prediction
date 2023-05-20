@@ -19,10 +19,7 @@ jobs:
 ### ⬇ IMPORTANT PART ⬇ ###
 
       - name: Install Render CLI
-        run: |
-          wget -qO- https://render.com/install.sh | bash
-          echo 'export PATH="$HOME/.render:$PATH"' >> $HOME/.bashrc
-          source $HOME/.bashrc
+        run: npm install -g @render/cli
 
 
       - name: Set up Render environment
