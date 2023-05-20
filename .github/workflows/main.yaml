@@ -19,7 +19,7 @@ jobs:
 ### ⬇ IMPORTANT PART ⬇ ###
 
       - name: Install Render CLI
-        run: npm install -g @render/cli
+        run: yarn global add @render/cli
 
 
       - name: Set up Render environment
