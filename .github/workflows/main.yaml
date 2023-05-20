@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Render CLI
         run: |
-          wget -qO render https://render.com/static/cli/latest/linux/render
+          curl -sL -o render https://render.com/static/cli/latest/linux/render
           chmod +x render
           mv render $HOME/.local/bin/render
           export PATH="$HOME/.local/bin:$PATH"
