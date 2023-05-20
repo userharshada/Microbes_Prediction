@@ -19,7 +19,11 @@ jobs:
 ### ⬇ IMPORTANT PART ⬇ ###
 
       - name: Install Render CLI
-        run: yarn global add @render/cli
+        run: |
+          wget -qO render https://render.com/static/cli/latest/linux/render
+          chmod +x render
+          mv render $HOME/.local/bin/render
+          export PATH="$HOME/.local/bin:$PATH"
 
 
       - name: Set up Render environment
