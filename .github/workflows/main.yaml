@@ -6,29 +6,28 @@ on:
   push:
     branches: [main]
 
-# Your workflows jobs.
+# Your workflow jobs.
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Check-out your repository.
+      # Check out your repository.
       - name: Checkout
         uses: actions/checkout@v2
 
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
-
-
+      # Install Render CLI.
       - name: Install Render CLI
         run: |
-          wget -O render https://github.com/render/cli/releases/latest/download/render-linux
-          chmod +x render
-          sudo mv render /usr/local/bin/
+          curl -L https://render.com/install.sh | bash
 
+      # Login to Render.
       - name: Login to Render
         run: render login --api-key ${{ secrets.RENDER_API_KEY }}
 
+      # Deploy to Render.
       - name: Deploy to Render
         run: render deploy --service ${{ secrets.RENDER_SERVICE_ID }} --file Dockerfile --branch main
 
