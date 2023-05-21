@@ -1,46 +1,42 @@
 # Your workflow name.
-name: Deploy to Render
+name: Deploy Web App
 
 # Run workflow on every push to main branch.
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 # Your workflows jobs.
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    
     steps:
-      # Check-out your repository.
-      - name: Checkout
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
-      - name: Install Render CLI
-        run: |
-          curl -sL -o render https://render.com/static/cli/latest/linux/render
-          chmod +x render
-          mkdir -p $HOME/.local/bin
-          mv render $HOME/.local/bin/render
-          export PATH="$HOME/.local/bin:$PATH"
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: your-docker-repo/your-app:latest
+
+    - name: Deploy app
+      uses: appleboy/ssh-action@master
+      with:
+        host: your-server-ip
+        username: your-ssh-username
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          docker-compose down
+          docker-compose pull
+          docker-compose up -d
 
 
-      - name: Set up Render environment
-        run: render setup
-
-
-      - name: Login to Render
-        run: |
-          $HOME/.render/render login --api-key ${{ secrets.RENDER_API_KEY }}
-
-
-      - name: Build and Deploy to Render
-        run: |
-          render build --file Dockerfile
-          render deploy --service ${{ secrets.RENDER_SERVICE_NAME }}
-
-
-
-### ⬆ IMPORTANT PART ⬆ ###
+          
+### ⬇ IMPORTANT PART ⬇ ###
