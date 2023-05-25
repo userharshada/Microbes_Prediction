@@ -1,5 +1,5 @@
 # Your workflow name.
-name: Deploy Web App
+name: Deploy ML Model
 
 # Run workflow on every push to main branch.
 on:
@@ -9,34 +9,43 @@ on:
 
 # Your workflows jobs.
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      # Check-out your repository.
+      - name: Checkout code
+        uses: actions/checkout@v2
 
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        tags: your-docker-repo/your-app:latest
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
 
-    - name: Deploy app
-      uses: appleboy/ssh-action@master
-      with:
-        host: your-server-ip
-        username: your-ssh-username
-        password: ${{ secrets.SSH_PASSWORD }}
-        script: |
-          docker-compose down
-          docker-compose pull
-          docker-compose up -d
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build Docker image
+        run: docker build -t microbes_prediction .
+
+      - name: Log into Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.userharshada }}
+          password: ${{ secrets.hapatade45 }}
+
+      - name: Push Docker image
+        run: docker push microbes_prediction
+
+      - name: Deploy to web application
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./app
 
 
-          
+
 ### ⬇ IMPORTANT PART ⬇ ###

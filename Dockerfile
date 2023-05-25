@@ -1,6 +1,6 @@
-FROM python:3.9
-COPY . /app
+FROM continuumio/anaconda3:latest
 WORKDIR /app
+COPY . /app
 RUN pip install -r requirements.txt
 RUN pip install joblib
 EXPOSE $PORT
