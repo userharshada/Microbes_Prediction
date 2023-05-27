@@ -29,7 +29,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build Docker image
-        run: docker build -t microbes_prediction .
+        run: docker build -t userharshada/prediction_model:latest .
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -39,7 +39,9 @@ jobs:
           email: harshadapatade1999@gmail.com
 
       - name: Push Docker image
-        run: docker push microbes_prediction
+        run: |
+          cd E:\Microbes_Prediction\venv
+          docker push userharshada/prediction_model:latest
 
       - name: Deploy to web application
         uses: peaceiris/actions-gh-pages@v3
