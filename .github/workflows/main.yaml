@@ -39,9 +39,7 @@ jobs:
           email: harshadapatade1999@gmail.com
 
       - name: Push Docker image
-        run: |
-          cd E:\Microbes_Prediction\venv
-          docker push userharshada/prediction_model:latest
+        run: docker push userharshada/microbes_prediction:latest
 
       - name: Deploy to web application
         uses: peaceiris/actions-gh-pages@v3
