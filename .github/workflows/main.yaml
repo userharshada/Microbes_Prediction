@@ -17,8 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-
-### ⬇ IMPORTANT PART ⬇ ###
+      ### ⬇ IMPORTANT PART ⬇ ###
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -35,7 +34,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           username: userharshada
-          password: hapatade45
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           email: harshadapatade1999@gmail.com
 
       - name: Push Docker image
@@ -44,9 +43,7 @@ jobs:
       - name: Deploy to web application
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./app
 
-
-
-### ⬇ IMPORTANT PART ⬇ ###
+      ### ⬇ IMPORTANT PART ⬇ ###
