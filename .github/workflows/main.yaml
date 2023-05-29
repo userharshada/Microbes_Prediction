@@ -41,10 +41,11 @@ jobs:
         run: docker push userharshada/prediction_model
 
       - name: Deploy to web application
-        uses: peaceiris/actions-gh-pages@v3 # Specify the version explicitly
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.MY_PERSONAL_TOKEN }}
           publish_dir: ./app
           publish_branch: gh-pages
+
 
       ### ⬇ IMPORTANT PART ⬇ ###
